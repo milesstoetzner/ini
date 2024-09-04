@@ -155,10 +155,10 @@ stringify(object,{
     bracketedArray : true,
 
     /**
-     *  Whether to use `safe` or `unsafe` when retrieving the value of keys or values.
+     *  Whether to use `safe` when retrieving values.
      */
 
-    safe : true    
+    safe : true
 
 })
 ```
