@@ -19,3 +19,13 @@ test('parse(stringify(x)) is same as x', function (t) {
 
   t.end()
 })
+
+test('parse(stringify(x)) is same as x with safe=false', function (t) {
+  for (var k in data) {
+    var s = ini.stringify(data[k], { safe: false })
+    t.comment(s, data[k])
+    t.same(ini.parse(s), data[k])
+  }
+
+  t.end()
+})
