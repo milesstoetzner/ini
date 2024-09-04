@@ -152,7 +152,13 @@ stringify(object,{
      *  Some parsers treat duplicate names by themselves as arrays
      */
 
-    bracketedArray : true
+    bracketedArray : true,
+
+    /**
+     *  Whether to use `safe` or `unsafe` when retrieving the value of keys or values.
+     */
+
+    safe : true    
 
 })
 ```
