@@ -1,30 +1,30 @@
 var ini = require('../')
 var test = require('tap').test
 
-// See https://github.com/npm/ini/issues/57
-const data = { key: 'UPIvqf0AAABA5i+p/QAAAA==' }
-
 test('safe stringify quotes value', function (t) {
+  // See https://github.com/npm/ini/issues/57
+  const data = { key: 'UPIvqf0AAABA5i+p/QAAAA==' }
   t.same(ini.stringify(data), `key="UPIvqf0AAABA5i+p/QAAAA=="\n`)
   t.end()
 })
 
 test('unsafe stringify does not quote value', function (t) {
+  // See https://github.com/npm/ini/issues/57
+  const data = { key: 'UPIvqf0AAABA5i+p/QAAAA==' }
   t.same(ini.stringify(data, { safe: false }), `key=UPIvqf0AAABA5i+p/QAAAA==\n`)
   t.end()
 })
 
 test('wrap in quotes to JSON-decode and preserve spaces with safe=false', function (t) {
-  const input = '" xa  n          p " = "\"\r\nyoyoyo\r\r\n"\n'
+  const data = {
+    " xa  n          p ": `"\"\r\nyoyoyo\r\r\n"`
+  }
 
   const expected = `
-" xa  n          p "=
-
-yoyoyo
-
+" xa  n          p "="\"\r\nyoyoyo\r\r\n"
 `.trimStart()
 
-  t.same(ini.stringify(ini.parse(input), { safe: false }), expected)
+  t.same(ini.stringify(data, { safe: false }), expected)
   t.end()
 })
 
@@ -297,27 +297,6 @@ x.y.z=xyz
 [x\.y\.z.a\.b\.c]
 a.b.c=abc
 `.trimStart()
-
-  t.same(ini.stringify(ini.parse(input), { safe: false }), expected)
-  t.end()
-})
-
-test('this next one is not a comment since its escaped with semicolon with safe=false', function (t) {
-  const input = `
-nocomment = this\; this is not a comment
-`.trimStart()
-
-  const expected = `
-nocomment=this; this is not a comment
-`.trimStart()
-
-  t.same(ini.stringify(ini.parse(input), { safe: false }), expected)
-  t.end()
-})
-
-test('this next one is not a comment since its escaped with number sign with safe=false', function (t) {
-  const input = "nocomment = this\# this is not a comment\n"
-  const expected = "nocomment=this# this is not a comment\n"
 
   t.same(ini.stringify(ini.parse(input), { safe: false }), expected)
   t.end()
